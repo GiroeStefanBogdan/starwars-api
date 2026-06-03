@@ -1,3 +1,7 @@
 spring:
   application:
     name: starwars-api
+  cache:
+    cache-names: people
+    caffeine:
+      spec: maximumSize=100,expireAfterWrite=5m

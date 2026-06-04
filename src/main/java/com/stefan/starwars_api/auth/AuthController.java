@@ -1,6 +1,7 @@
 package com.stefan.starwars_api.auth;
 
 import com.stefan.starwars_api.dto.RefreshRequestDto;
+import com.stefan.starwars_api.dto.RefreshResponseDto;
 import com.stefan.starwars_api.dto.UserDto;
 import com.stefan.starwars_api.dto.UserResponseDto;
 import org.springframework.http.ResponseEntity;
@@ -26,13 +27,14 @@ public class AuthController {
     }
 
     @PostMapping("/auth/refresh")
-    public ResponseEntity<String> refreshToken(@RequestBody RefreshRequestDto refreshRequestDto) {
+    public ResponseEntity<RefreshResponseDto> refreshToken(
+            @RequestBody RefreshRequestDto refreshRequestDto) {
 
         String newAccessToken = authService.refreshToken(refreshRequestDto.refreshToken());
         if (newAccessToken == null) {
             return ResponseEntity.status(401).build();
         }
-        return ResponseEntity.ok(newAccessToken);
+        return ResponseEntity.ok(new RefreshResponseDto(newAccessToken));
     }
 
     @PostMapping("/auth/logout")

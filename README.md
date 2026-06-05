@@ -16,6 +16,12 @@ The server starts on `http://localhost:8080`.
 mvn test
 ```
 
+## SWAPI Mirror
+
+The requirement specifies `https://swapi.dev/api/people` as the data source. However, `swapi.dev` is currently unreachable due to an expired SSL certificate (`ERR_CERT_DATE_INVALID`), and browsers enforcing HSTS block the connection entirely.
+
+This project uses `https://swapi.py4e.com/api` instead, which is a well-known community mirror of the original Star Wars API maintained by Dr. Chuck (University of Michigan). It exposes an identical REST interface and returns the same data — same endpoints, same JSON structure, same pagination. The only difference is the domain.
+
 ## Design Decisions / Trade-offs
 
 - **In-memory token store (`ConcurrentHashMap`)**: Simple and thread-safe. Tokens are lost on restart. For production, a persistent store (Redis or a database) would be used instead.
